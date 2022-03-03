@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-const Loading = () => <div className="waft-gradient" />;
+const Loading = () => <div className="waft-gradient">Loading</div>;
 
 export default Loading;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import AsyncSelect from "react-select/async";
-import request from "../../app/utils/request";
+import request from "utils/request";
 
 export default function DestinationAutoComplete({
   name,

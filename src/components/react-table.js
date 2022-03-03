@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { useForm, useField, splitFormProps } from 'react-form';
-import { useTable } from 'react-table';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useTable } from "react-table";
 
-const TableInput = props => {
+const TableInput = (props) => {
   // console.log('TableInput', props);
   const { column, row, cell, updateData, defaultValue } = props;
-  const onChange = e => {
-    if (e.target.value == '' || e.target.value <= 1) {
+  const onChange = (e) => {
+    if (e.target.value == "" || e.target.value <= 1) {
       updateData(row.index, column.id, parseInt(1));
     } else updateData(row.index, column.id, parseInt(e.target.value));
   };
@@ -22,9 +21,9 @@ const TableInput = props => {
   );
 };
 
-const TableInputString = props => {
+const TableInputString = (props) => {
   const { column, row, cell, updateData } = props;
-  const onChange = e => updateData(row.index, column.id, e.target.value);
+  const onChange = (e) => updateData(row.index, column.id, e.target.value);
   return <input type="string" value={cell.value} onChange={onChange} />;
 };
 
@@ -38,72 +37,72 @@ const StyledTable = styled.table`
   }
 `;
 
-const ReactTable = React.memo(props => {
+const ReactTable = React.memo((props) => {
   let count = 0;
   const { setAmountDue, setState, state } = props;
   const columns = React.useMemo(
     () => [
       {
-        Header: 'S.N.',
-        accessor: 'id',
+        Header: "S.N.",
+        accessor: "id",
         Cell: TableInput,
       },
       {
-        Header: 'Description of goods',
-        accessor: 'descriptionOfGoods',
+        Header: "Description of goods",
+        accessor: "descriptionOfGoods",
         Cell: TableInputString,
       },
       {
-        Header: 'No of pieces',
-        accessor: 'pieces',
+        Header: "No of pieces",
+        accessor: "pieces",
         Cell: TableInput,
       },
       {
-        Header: 'Weight',
-        accessor: 'weight',
+        Header: "Weight",
+        accessor: "weight",
         Cell: TableInput,
       },
       {
-        Header: 'Declared Value',
-        accessor: 'declaredValue',
+        Header: "Declared Value",
+        accessor: "declaredValue",
         Cell: TableInput,
       },
       {
-        Header: 'Ref. No.',
-        accessor: 'ref',
+        Header: "Ref. No.",
+        accessor: "ref",
         Cell: TableInput,
       },
       {
-        Header: 'Instruction',
-        accessor: 'instruction',
+        Header: "Instruction",
+        accessor: "instruction",
         Cell: TableInputString,
       },
     ],
-    [],
+    []
   );
 
   const initialData = [
     {
       id: 1,
-      descriptionOfGoods: '',
+      descriptionOfGoods: "",
       pieces: 1,
       weight: 1,
       declaredValue: 1,
-      ref: '',
-      instruction: '',
+      ref: "",
+      instruction: "",
     },
   ];
 
   const [data, setData] = React.useState(props.editForData || initialData);
   const resetData = () => setData(initialData);
   const addRow = () =>
-    setData(old => [
+    setData((old) => [
       ...old,
       {
         id: old.length + 1,
-        descriptionOfGoods: '',
-        ref: '',
-        instruction: '',
+        descriptionOfGoods: "",
+        ref: "",
+        instruction: "",
         declaredValue: 1,
         weight: 1,
         pieces: 1,
@@ -111,7 +110,7 @@ const ReactTable = React.memo(props => {
     ]);
 
   const updateData = (rowIndex, columnID, value) => {
-    setData(oldData =>
+    setData((oldData) =>
       oldData.map((row, index) => {
         if (index === rowIndex) {
           return {
@@ -120,7 +119,7 @@ const ReactTable = React.memo(props => {
           };
         }
         return row;
-      }),
+      })
     );
   };
 
@@ -134,10 +133,10 @@ const ReactTable = React.memo(props => {
       state.govtTax +
       state.serviceCharge +
       state.volumeCharge,
-    0,
+    0
   );
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     e.preventDefault();
 
     setState({
@@ -179,21 +178,21 @@ const ReactTable = React.memo(props => {
       </div>
       <StyledTable className="mb-4" {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
               ))}
             </tr>
           ))}
         </thead>
         <tbody>
-          {rows.map(row => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                 ))}
               </tr>
             );
@@ -247,7 +246,7 @@ const ReactTable = React.memo(props => {
           <input
             className="inputbox"
             type="text"
-            value={state?.total || ''}
+            value={state?.total || ""}
             disabled
           />
         </div>
@@ -256,7 +255,7 @@ const ReactTable = React.memo(props => {
   );
 });
 
-const Invoice = props => {
+const Invoice = (props) => {
   const [amountDue, setAmountDue] = React.useState(0);
   const [state, setState] = React.useState(
     props.one?.invoice?.state || {
@@ -265,7 +264,7 @@ const Invoice = props => {
       govtTax: 0,
       discount: 0,
       total: 0,
-    },
+    }
   );
   return (
     <ReactTable

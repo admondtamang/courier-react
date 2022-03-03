@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import AsyncSelect from "react-select/async";
-import request from "../utils/request";
-import { apiBaseUrl } from "../../constant";
+import request from "utils/request";
+import { apiBaseUrl } from "utils/constant";
 
 export default function CustomAutoComplete({ name, handleChange }) {
   const [value, setValue] = useState("");
